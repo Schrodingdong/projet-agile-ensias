@@ -22,6 +22,7 @@ jobs:
         node-version: 16
         cache: 'npm'
         cache-dependency-path: frontend
+    - run: cd frontend
     - name: install npm dependencies
       run: npm ci
     - name: build the project
