@@ -1,27 +1,21 @@
 import { useState, useEffect } from "react";
-import { usePostLoginMutation, usePostSignUpMutation } from "@/state/api";
 
 const Login = ({ setUser, setSecret }) => {
   const [isRegister, setIsRegister] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [triggerLogin, resultLogin] = usePostLoginMutation();
-  const [triggerSignUp] = usePostSignUpMutation();
 
   const handleLogin = () => {
-    triggerLogin({ username, password });
+    // handles login
   };
 
   const handleRegister = () => {
-    triggerSignUp({ username, password });
+    // handles register
   };
 
   useEffect(() => {
-    if (resultLogin.data?.response) {
-      setUser(username);
-      setSecret(password);
-    }
-  }, [resultLogin.data]); // eslint-disable-line
+    // handles login/register response
+  }, []); 
 
   return (
     <div className="login-page">
