@@ -5,7 +5,7 @@ import Login from '@/components/login/login';
 
 
 function App() {
-  const [isAuth, setIsAuth] = useState(true);
+  const [isAuth, setIsAuth] = useState(false);
   const [user, setUser] = useState(null);
   const [secret, setSecret] = useState(null);
   return <div className="app">
@@ -14,12 +14,12 @@ function App() {
           <Route
             path="/"
             element={
-              isAuth ? (
-                // <Navigate to="/chat" element={<Chat user={user} secret={secret}/>} />
-                <Chat user={user} secret={secret}/>
-              ) : (
-                <Login setUser={setUser} setSecret={setSecret} />
-              )
+               isAuth ? (
+                 // <Navigate to="/chat" element={<Chat user={user} secret={secret}/>} />
+                 <Chat user={user} secret={secret}/>
+               ) : (
+                 <Login setUser={setUser} setSecret={setSecret} />
+               )
             }
           />
         </Routes>
