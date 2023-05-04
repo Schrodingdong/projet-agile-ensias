@@ -15,13 +15,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - run: ls -r
-    - run: cd ./frontend
+    - run: ls -R
     - name: Use Node.js
       uses: actions/setup-node@v3
       with:
         node-version: 16
         cache: 'npm'
+        cache-dependency-path: frontend
     - name: install npm dependencies
       run: npm ci
     - name: build the project
