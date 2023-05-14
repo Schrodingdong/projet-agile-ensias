@@ -1,3 +1,4 @@
+import { usePostAiAssistMutation } from "@/state/api";
 import React, { useEffect, useState } from "react";
 import MessageFormUI from "./MessageFormUI";
 
@@ -20,6 +21,7 @@ function useDebounce(value, delay) {
 const AiAssist = ({ props, activeChat }) => {
   const [message, setMessage] = useState("");
   const [attachment, setAttachment] = useState("");
+  const [triggerAssist, resultAssist] = usePostAiAssistMutation();
   const [appendText, setAppendText] = useState("");
 
   const handleChange = (e) => setMessage(e.target.value);
@@ -48,7 +50,7 @@ const AiAssist = ({ props, activeChat }) => {
   useEffect(() => {
     if (debouncedValue) {
       const form = { text: message };
-      //..
+      triggerAssist(form);
     }
   }, [debouncedValue]); // eslint-disable-line
 
@@ -60,6 +62,12 @@ const AiAssist = ({ props, activeChat }) => {
     }
     setAppendText("");
   };
+
+  useEffect(() => {
+    if (resultAssist.data?.text) {
+      setAppendText(resultAssist.data?.text);
+    }
+  }, [resultAssist]); // eslint-disable-line
 
   return (
     <MessageFormUI
