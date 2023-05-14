@@ -6,16 +6,19 @@ const Login = ({ setUser, setSecret }) => {
   const [password, setPassword] = useState("");
 
   const handleLogin = () => {
-    // handles login
+    //..
   };
 
   const handleRegister = () => {
-    // handles register
+    //..
   };
 
   useEffect(() => {
-    // handles login/register response
-  }, []); 
+    if (resultLogin.data?.response) {
+      setUser(username);
+      setSecret(password);
+    }
+  }, [resultLogin.data]); // eslint-disable-line
 
   return (
     <div className="login-page">

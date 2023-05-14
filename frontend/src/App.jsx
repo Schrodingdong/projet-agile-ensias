@@ -1,30 +1,41 @@
-import { useState } from 'react'
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Chat from '@/components/chat/chat';
-import Login from '@/components/login/login';
-
+import { useState } from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import Chat from "@/components/chat";
+import Login from "@/components/login";
 
 function App() {
-  const [isAuth, setIsAuth] = useState(false);
   const [user, setUser] = useState(null);
   const [secret, setSecret] = useState(null);
-  return <div className="app">
-     <BrowserRouter>
+  const isAuth = Boolean(user) && Boolean(secret);
+
+  return (
+    <div className="app">
+      <BrowserRouter>
         <Routes>
           <Route
             path="/"
             element={
-               isAuth ? (
-                 // <Navigate to="/chat" element={<Chat user={user} secret={secret}/>} />
-                 <Chat user={user} secret={secret}/>
-               ) : (
-                 <Login setUser={setUser} setSecret={setSecret} />
-               )
+              isAuth ? (
+                <Navigate to="/chat" />
+              ) : (
+                <Login setUser={setUser} setSecret={setSecret} />
+              )
+            }
+          />
+          <Route
+            path="/chat"
+            element={
+              isAuth ? (
+                <Chat user={user} secret={secret} />
+              ) : (
+                <Navigate to="/" />
+              )
             }
           />
         </Routes>
-     </BrowserRouter>
-  </div>
+      </BrowserRouter>
+    </div>
+  );
 }
 
-export default App
+export default App;
