@@ -5,25 +5,45 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ "master" ]
+    branches: ["master"]
   pull_request:
-    branches: [ "master" ]
+    branches: ["master"]
 
 jobs:
-  build:
+  backend:
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v3
-    - run: ls -R
-    - name: Use Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: 16
-        cache: 'npm'
-        cache-dependency-path: frontend
-    - run: cd frontend
-    - name: install npm dependencies
-      run: npm ci
-    - name: build the project
-      run: npm run build --if-present
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        run: |
+          cd backend
+          npm install
+      - name: Build backend
+        run: |
+          cd backend
+          npm run build
+      - name: Archive build artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: backend
+          path: backend/build
+
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        run: |
+          cd frontend
+          npm install
+      - name: Build frontend
+        run: |
+          cd frontend
+          npm run build
+      - name: Archive build artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: frontend
+          path: frontend/build
