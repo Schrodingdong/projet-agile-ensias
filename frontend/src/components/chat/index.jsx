@@ -11,6 +11,7 @@ import AiCode from "@/components/customMessageForms/AiCode";
 import AiAssist from "@/components/customMessageForms/AiAssist";
 
 const Chat = ({ user, secret }) => {
+  console.log(import.meta.env);
   const chatProps = useMultiChatLogic(
     import.meta.env.VITE_PROJECT_ID,
     user,

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { usePostLoginMutation, usePostSignUpMutation } from "@/state/api";
+import { usePostLoginMutation, usePostSignUpMutation } from "../../state/api";
 
 const Login = ({ setUser, setSecret }) => {
   const [isRegister, setIsRegister] = useState(false);
@@ -24,7 +24,7 @@ const Login = ({ setUser, setSecret }) => {
   }, [resultLogin.data]); // eslint-disable-line
 
   return (
-    <div className="login-page">
+    <div className="login-page" data-testid="login-page">
       <div className="login-container">
         <h2 className="title">CHATGPT APP</h2>
         <p

@@ -1,17 +1,16 @@
 import express from "express";
 import axios from "axios";
-
+import process from "dotenv";
 const router = express.Router();
 
 router.post("/login", async (req, res) => {
   try {
     const { username, password } = req.body;
-
     const chatEngineResponse = await axios.get(
       "https://api.chatengine.io/users/me",
       {
         headers: {
-          "Project-ID": process.env.PROJECT_ID,
+          "Project-ID": process.config().parsed.PROJECT_ID,
           "User-Name": username,
           "User-Secret": password,
         },
@@ -36,13 +35,14 @@ router.post("/signup", async (req, res) => {
         secret: password,
       },
       {
-        headers: { "Private-Key": process.env.PRIVATE_KEY },
+        headers: { "Private-Key": process.config().parsed.PRIVATE_KEY },
       }
     );
 
     res.status(200).json({ response: chatEngineResponse.data });
   } catch (error) {
     console.error("error", error.message);
+    console.log(error)
     res.status(500).json({ error: error.message });
   }
 });
